@@ -152,14 +152,18 @@ function mut (a, b) {
 }
 
 function chemEq2Matrix (chemStr) {
+  // 方程式去空格并从“=”切割
   let eqArr = chemStr.replace(/ +/g, '').split('=')
+  // 反应物按“+”切割
   let leftEqArr = eqArr[0].split('+')
+  // 生成物按“+”切割
   let rightEqArr = eqArr[1].split('+')
   let chemElmObj = {} // 有哪些元素
-  eqArr = [...leftEqArr, ...rightEqArr]
+  eqArr = [...leftEqArr, ...rightEqArr] // 将方程式左右元素放到数组（应该还只是字符）
   let len = chemSymbol.length
-  let leftLen = leftEqArr.length
-  let rightLen = rightEqArr.length
+  let leftLen = leftEqArr.length // 反应物数组长度
+  let rightLen = rightEqArr.length // 生成物数组长度
+  // 组成1*（1+ leftLen + rightLen）矩阵，用0填充1至（leftLen + rightLen -1）列，也就是[[1,0, 0, 0,...]]
   let matrix = [[1, ...Array(leftLen + rightLen).fill(0)]]
   for (let i = 0; i < len; i++) {
     let chemElm = chemSymbol[i]
